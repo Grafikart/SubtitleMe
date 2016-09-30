@@ -1,0 +1,70 @@
+$topbar-height: 40px;
+
+.topbar {
+  position: relative;
+  z-index: 100;
+
+  height: $topbar-height;
+
+  color: #FFF;
+  line-height: $topbar-height + 1;
+  text-align: center;
+
+  cursor: default;
+
+  border-bottom: 1px solid #1D2022;
+  background-color: #1e2123;
+  //-webkit-user-select: none;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 80px;
+    bottom: 0;
+    -webkit-app-region: drag;
+  }
+
+}
+
+.topbar__title {
+  color: #FFF;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.topbar__actions {
+  position: absolute;
+  z-index: 100;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  height: $topbar-height;
+
+  & > a{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 0 1px;
+    display: block;
+  }
+
+}
+
+$actions: 'minimize', 'maximize', 'close';
+
+@each $action in $actions {
+  .topbar__#{$action} {
+    background-image: url(./#{$action}.svg);
+    &:hover {
+      background-image: url(./#{$action}_prelight.svg);
+    }
+    &:active {
+      background-image: url(./#{$action}_pressed.svg);
+    }
+  }
+}
+
+
