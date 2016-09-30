@@ -1,23 +1,29 @@
 <template>
   <div>
-    <div class="subtitles">
-      <transition-group name="subtitle" appear v-on:beforeEnter="beforeEnter" v-on:afterEnter="afterEnter">
-        <div class="subtitle" @click="download(subtitle)" v-for="(subtitle, index) in subtitles" :key="subtitle" :data-index="index">
-          <div class="subtitle__number">{{ episode(subtitle) }}</div>
-          <div class="subtitle__name"><i class="icon" v-if="subtitle.exact">grade</i> {{ subtitle.name }}</div>
+    <tabs animation="slide" :only-fade="false">
+      <tab-pane :label="lang" :count="subtitles.length" v-for="(subtitles, lang) in subtitlesByLang">
+        <div class="subtitles">
+          <transition-group name="subtitle" appear v-on:beforeEnter="beforeEnter" v-on:afterEnter="afterEnter">
+            <div class="subtitle" @click="download(subtitle)" v-for="(subtitle, index) in subtitles" :key="subtitle" :data-index="index">
+              <div class="subtitle__number">{{ episode(subtitle) }}</div>
+              <div class="subtitle__name"><i class="icon" v-if="subtitle.exact">grade</i> {{ subtitle.name }}</div>
+            </div>
+          </transition-group>
         </div>
-      </transition-group>
-    </div>
+      </tab-pane>
+    </tabs>
   </div>
 </template>
 
 <script>
+  import { Tabs, TabPane } from './tabs'
   import { mapGetters, mapActions } from 'vuex'
   import leftpad from 'left-pad'
 
   export default {
+    components: { Tabs, TabPane },
     computed: {
-      ...mapGetters(['subtitles'])
+      ...mapGetters(['langs', 'subtitlesByLang'])
     },
     methods: {
       ...mapActions(['download']),
@@ -28,7 +34,6 @@
         el.style.transitionDelay = null
       },
       episode (subtitle) {
-        console.log('==>', subtitle)
         return 'S' + leftpad(subtitle.season, 2, '0') + 'E' + leftpad(subtitle.episode, 2, '0')
       }
     }
@@ -36,10 +41,6 @@
 </script>
 
 <style lang="scss">
-  .dropzone__area {
-    border: 1px solid #FF0000;
-  }
-
   .subtitle-enter-active{
     transition-duration: 0.3s;
   }
@@ -49,13 +50,20 @@
     transform: translateY(20px)
   }
 
+  .subtitles{
+    min-height:calc(100vh - 80px);
+  }
+
   .subtitle{
     cursor: pointer;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid rgba(#000, 0.4);
     border-top: 1px solid rgba(#FFFFFF, 0.1);
     padding: 20px 0;
     display: flex;
     align-items: center;
+    &:first-child{
+      border-top: none;
+    }
     &:hover{
       background-color: rgba(#FFFFFF, 0.02);
     }

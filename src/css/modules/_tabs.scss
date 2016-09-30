@@ -1,0 +1,36 @@
+.tab-list{
+  display: flex;
+  height: 40px;
+  list-style: none;
+  align-items: center;
+}
+
+.tab-content{
+  margin: 0 !important;
+}
+
+.tab-list li{
+  flex-grow: 1;
+  height: 40px;
+  line-height: 39px;
+  text-align: center;
+  border-bottom: 1px solid rgba(#FFF, 0.05);
+  color: rgba(#FFF, 0.7);
+  cursor: pointer;
+  transition: border 0.3s, color 0.3s;
+
+  &:hover{
+    color: #FFF;
+    border-bottom-color: rgba(#FFF, 0.1);
+  }
+
+  &.is-active{
+    color: #FFF;
+    border-bottom-color: #FFFFFF;
+  }
+}
+
+.tab-list .count{
+  color: rgba(#FFF, 0.5);
+  font-size: 0.9em;
+}

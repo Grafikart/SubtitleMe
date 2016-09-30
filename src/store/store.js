@@ -8,7 +8,12 @@ import loader from './modules/loader'
 
 Vue.use(Vuex)
 
+const state = {
+  langs: {eng: 'English', fre: 'Français'}
+}
+
 export default new Vuex.Store({
+  state,
   actions,
   getters,
   modules: {

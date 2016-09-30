@@ -7,7 +7,7 @@
 				<path id="box" d="M77.392 67.777H25.201c-1.636 0-2.963-1.336-2.963-2.985V47.708c0-1.649 1.327-2.986 2.963-2.986s2.963 1.337 2.963 2.986v14.097h46.264V47.708c0-1.649 1.327-2.986 2.963-2.986 1.637 0 2.963 1.337 2.963 2.986v17.083C80.355 66.441 79.028 67.777 77.392 67.777z" data-svg-origin="22.238000869750977 44.72200012207031" style="transform: matrix(1, 0, 0, 1, 0, 0); opacity: 1;"></path>
 			</svg>
         <div class="dropzone__title">DRAG AND DROP</div>
-        <div class="dropzone__text">pour trouver les sous-titres {{ isDragging }}</div>
+        <div class="dropzone__text">pour trouver les sous-titres</div>
       </div>
     </div>
   </div>

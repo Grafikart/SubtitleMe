@@ -1,7 +1,8 @@
 import async from 'async'
 let subtitler = window.require('subtitler')
+let langs = {eng: 'English', fre: 'Français'}
 
-export const addOpenSubtitle = ({ commit }, { subtitle, file }) => {
+export const addOpenSubtitle = ({ commit }, { subtitle, file, lang }) => {
   commit('ADD_SUBTITLE', {
     name: subtitle.SubFileName,
     episode: subtitle.SeriesEpisode,
@@ -9,7 +10,8 @@ export const addOpenSubtitle = ({ commit }, { subtitle, file }) => {
     download: subtitle.SubDownloadLink,
     exact: subtitle.MatchedBy === 'moviehash',
     dislikes: subtitle.SubBad,
-    file: file.path
+    file: file.path,
+    lang: lang
   })
 }
 
@@ -20,24 +22,26 @@ export const handleFile = ({ commit, dispatch }, file) => {
   subtitler.api.login().then(token => {
     commit('RESET_SUBTITLES')
     commit('START_LOADING')
-    async.parallel([
-      function (callback) {
-        subtitler.api.searchForFile(token, 'eng', file.path).then(subtitles => {
+    let calls = []
+    for (let lang in langs) {
+      calls.push(function (callback) {
+        subtitler.api.searchForFile(token, lang, file.path).then(subtitles => {
           subtitles.forEach(subtitle => {
-            dispatch('addOpenSubtitle', { subtitle, file })
+            dispatch('addOpenSubtitle', { subtitle, file, lang: langs[lang] })
           })
           callback()
         })
-      },
-      function (callback) {
-        subtitler.api.searchForTitle(token, 'eng', file.name).then(subtitles => {
+      })
+      calls.push(function (callback) {
+        subtitler.api.searchForTitle(token, lang, file.name).then(subtitles => {
           subtitles.forEach(subtitle => {
-            dispatch('addOpenSubtitle', { subtitle, file })
+            dispatch('addOpenSubtitle', { subtitle, file, lang: langs[lang] })
           })
           callback()
         })
-      }
-    ], _ => {
+      })
+    }
+    async.parallel(calls, _ => {
       commit('END_LOADING')
     })
   })
@@ -55,8 +59,13 @@ export const download = ({ commit }, subtitle) => {
     response.pipe(gunzip).pipe(dest)
     return gunzip.on('end', function () {
       commit('END_LOADING')
+      commit('RESET_SUBTITLES')
       response.unpipe(gunzip)
       response.unpipe(dest)
+      /* eslint-disable no-new */
+      new window.Notification('Bravo', {
+        body: subtitle.name + '.srt téléchargé avec succès !'
+      })
     })
   })
 }
