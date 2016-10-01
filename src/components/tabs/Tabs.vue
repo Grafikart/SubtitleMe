@@ -104,8 +104,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~bulma/sass/utilities/variables';
-
 .tabs {
   position: relative;
   flex: 1;
@@ -158,7 +156,6 @@ export default {
       align-items: flex-start;
       max-width: calc(100% / 6);
       border-bottom: none;
-      border-right: 1px solid $grey-light;
     }
 
     li {
@@ -166,21 +163,12 @@ export default {
 
       a {
         border-bottom: none;
-        border-right: 1px solid $grey-light;
         margin-bottom: 0;
         margin-right: -1px;
         justify-content: flex-end;
 
-        &:hover {
-          border-right-color: $grey-darker;
-        }
       }
 
-      &.is-active {
-        a {
-          border-right-color: $turquoise;
-        }
-      }
     }
   }
   &.is-layout-right {
@@ -194,28 +182,16 @@ export default {
       justify-content: flex-start;
       max-width: calc(100% / 6);
       border-bottom: none;
-      border-left: 1px solid $grey-light;
-
       li {
         width: 100%;
 
         a {
           border-bottom: none;
-          border-left: 1px solid $grey-light;
           margin-bottom: 0;
           margin-left: -1px;
           justify-content: flex-start;
-
-          &:hover {
-            border-left-color: $grey-darker;
-          }
         }
 
-        &.is-active {
-          a {
-            border-left-color: $turquoise;
-          }
-        }
       }
     }
   }
