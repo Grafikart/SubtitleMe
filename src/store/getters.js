@@ -13,6 +13,5 @@ export const subtitlesByLang = state => {
   for (let subtitle of sortedSubtitles) {
     groupedSubtitles[subtitle.lang].push(subtitle)
   }
-  console.log(groupedSubtitles)
   return groupedSubtitles
 }

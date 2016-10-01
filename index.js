@@ -56,14 +56,20 @@ app.on('activate', function () {
   }
 })
 
-ipc.on('close', function(){
-  mainWindow.close();
+ipc.on('close', function (){
+  mainWindow.close()
 })
 
-ipc.on('minimize', function(){
-  mainWindow.minimize();
+ipc.on('minimize', function (){
+  mainWindow.minimize()
 })
 
-ipc.on('maximize', function(){
-  mainWindow.maximize();
+let maximized = false // mainWindow.isMaximized() doesn't work :(
+ipc.on('maximize', function (){
+  if (maximized) {
+    mainWindow.unmaximize()
+  } else {
+    mainWindow.maximize()
+  }
+  maximized = !maximized
 })
