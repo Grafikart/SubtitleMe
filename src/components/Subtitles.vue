@@ -51,7 +51,8 @@
   }
 
   .subtitles{
-    min-height:calc(100vh - 80px);
+    height:calc(100vh - 80px);
+    overflow: auto;
   }
 
   .subtitle{
