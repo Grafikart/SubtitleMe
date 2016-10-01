@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <topbar></topbar>
-    <dropzone></dropzone>
     <div class="view">
+      <dropzone></dropzone>
       <loader></loader>
       <router-view></router-view>
     </div>
