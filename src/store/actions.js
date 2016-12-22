@@ -5,6 +5,9 @@ const langs = {eng: 'English', fre: 'Français'}
 
 global.storage = storage
 
+/**
+ * Load settings from json storage
+ */
 export const loadSettings = ({ commit }) => {
   storage.get('settings', function (error, data) {
     if (error) throw error
@@ -12,6 +15,10 @@ export const loadSettings = ({ commit }) => {
   })
 }
 
+/**
+ * Save new settings
+ * @param settings object containing settings
+ */
 export const setSettings = ({ commit, state }, settings) => {
   commit('SET_SETTINGS', settings)
   storage.set('settings', state.settings, (error) => {
@@ -19,6 +26,12 @@ export const setSettings = ({ commit, state }, settings) => {
   })
 }
 
+/**
+ * Add a new openSubtitle subtitle to the list
+ * @param subtitle object subtitle returned from subtitler
+ * @param file File file dropped
+ * @param lang
+ */
 export const addOpenSubtitle = ({ commit }, { subtitle, file, lang }) => {
   commit('ADD_SUBTITLE', {
     name: subtitle.SubFileName,
@@ -32,13 +45,31 @@ export const addOpenSubtitle = ({ commit }, { subtitle, file, lang }) => {
   })
 }
 
-export const handleFile = ({ commit, dispatch, getters }, file) => {
-  if (file === undefined) {
-    return null // TODO: Mettre un message d'erreur
+/**
+ * Add a new openSubtitle subtitle to the list
+ * @param files FileList dropped files
+ */
+export const handleFiles = ({ commit, dispatch }, files) => {
+  if (files === undefined) {
+    return null // TODO: Handle this error ?
   }
+  commit('SUBTITLES_Q', files)
+  dispatch('processQ')
+}
+
+/**
+ * Process the first element in the subtitle Q
+ */
+export const processQ = ({ commit, dispatch, getters, state }) => {
+  commit('SHIFT_SUBTITLES_Q')
+  console.log(state.subtitles)
+  let file = state.subtitles.current
+  if (file === undefined) {
+    return null // TODO: Handle this error ?
+  }
+  commit('RESET_SUBTITLES')
+  commit('START_LOADING')
   subtitler.api.login().then(token => {
-    commit('RESET_SUBTITLES')
-    commit('START_LOADING')
     let calls = []
     for (let lang in langs) {
       calls.push(function (callback) {
@@ -70,11 +101,19 @@ export const handleFile = ({ commit, dispatch, getters }, file) => {
   })
 }
 
+/**
+ * Add error for a file
+ * @param filename String name of the file that throw an error
+ */
 export const error = ({ commit }, filename) => {
   commit('ADD_ERROR', filename)
 }
 
-export const download = ({ commit, state }, subtitle) => {
+/**
+ * Start a download for the subtitle
+ * @param subtitle Object
+ */
+export const download = ({ commit, state, dispatch }, subtitle) => {
   let zlib = window.require('zlib')
   let http = window.require('http')
   let fs = window.require('fs')
@@ -105,6 +144,9 @@ export const download = ({ commit, state }, subtitle) => {
         new window.Notification('Bravo', {
           body: subtitle.name + '.srt téléchargé avec succès !'
         })
+      }
+      if (state.subtitles.q.length > 0) {
+        dispatch('processQ')
       }
     })
   })

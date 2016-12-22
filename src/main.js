@@ -46,7 +46,7 @@ document.body.addEventListener('dragleave', function (e) {
 })
 
 document.body.addEventListener('drop', function (e) {
-  store.dispatch('handleFile', e.dataTransfer.files[0])
+  store.dispatch('handleFiles', e.dataTransfer.files)
   router.push('/')
   store.commit('DRAG_LEAVE')
 })
