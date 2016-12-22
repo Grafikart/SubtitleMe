@@ -5,6 +5,7 @@ import * as getters from './getters'
 import dragdrop from './modules/dragdrop'
 import subtitles from './modules/subtitles'
 import loader from './modules/loader'
+import settings from './modules/settings'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ export default new Vuex.Store({
   modules: {
     dragdrop,
     loader,
-    subtitles
+    subtitles,
+    settings
   },
   strict: true
 })

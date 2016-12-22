@@ -20,7 +20,9 @@
     computed: {
       ...mapGetters(['isDragging', 'hasSubtitles']),
       cls () { return {'is-hover': this.isDragging} },
-      isVisible () { return this.isDragging || !this.hasSubtitles }
+      isVisible () {
+        return this.isDragging || (!this.hasSubtitles && this.$route.name === 'root')
+      }
     }
   }
 </script>

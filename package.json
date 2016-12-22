@@ -17,6 +17,8 @@
     "package-all": "npm run package -- --all"
   },
   "dependencies": {
+    "electron-json-storage": "^2.1.0",
+    "electron-window-state": "^4.0.1",
     "lodash": "^4.16.2",
     "subtitler": "^2.6.0"
   },

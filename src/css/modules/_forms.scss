@@ -1,0 +1,58 @@
+.config{
+  padding: 20px 35px;
+}
+
+.config h2{
+  line-height: 1.5;
+  border-bottom: 2px solid rgba(#FFF, 0.05);
+  font-size: 18px;
+}
+
+.form-group{
+  margin: 1rem 0px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+
+  .checkbox{
+    margin-top: 6px;
+  }
+}
+
+.form-label{
+  padding: 7px 0;
+  width: 50%;
+  color: #A0A0A0;
+  font-size: 13px;
+}
+
+input.form-control{
+  background-color: rgba(#000, 0.2);
+  border: 1px solid rgba(#FFF, 0.1);
+  padding: 8px;
+  color: #FFF;
+  width: 100%;
+}
+
+.help-text{
+  width: 100%;
+  font-size: 0.7rem;
+  font-weight: lighter;
+  color: rgba(#FFF, 0.3)
+}
+
+.btn{
+  padding: 6px 20px;
+  border: 2px solid rgba(#FFF, 0.3);
+  text-transform: uppercase;
+  color: #FFF;
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover{
+    border-color: #FFFFFF;
+  }
+}

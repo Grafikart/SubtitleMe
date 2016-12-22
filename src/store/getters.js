@@ -1,6 +1,7 @@
 import { orderBy } from 'lodash'
 
 export const langs = state => state.langs
+export const settings = state => state.settings
 export const isDragging = state => state.dragdrop.dragging
 export const isLoading = state => state.loader.loading
 export const hasSubtitles = state => state.subtitles.items.length > 0

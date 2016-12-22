@@ -1,4 +1,5 @@
 const electron = require('electron')
+const windowStateKeeper = require('electron-window-state')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
@@ -8,13 +9,24 @@ const ipc = electron.ipcMain
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
+
+  // Load the previous state with fallback to defaults
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 600,
+    defaultHeight: 600
+  });
+
+  // Create the window using the state information
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     frame: false,
     transparent: true
-  })
+  });
+
+  mainWindowState.manage(mainWindow);
 
   // and load the index.html of the app.
   if (process.env.NODE_ENV === 'development') {

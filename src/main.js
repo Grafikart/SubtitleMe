@@ -7,7 +7,12 @@ Vue.use(VueRouter)
 let router = new VueRouter({
   routes: [{
     path: '/',
+    name: 'root',
     component: require('./components/Subtitles.vue')
+  }, {
+    path: '/settings',
+    name: 'settings',
+    component: require('./components/Settings.vue')
   }]
 })
 
@@ -18,6 +23,8 @@ new Vue({
   el: '#app',
   render: h => h(require('./App.vue'))
 })
+
+store.dispatch('loadSettings')
 
 // On bloque le drag / drop natif
 document.ondragover = document.ondrop = function (e) {
@@ -40,5 +47,6 @@ document.body.addEventListener('dragleave', function (e) {
 
 document.body.addEventListener('drop', function (e) {
   store.dispatch('handleFile', e.dataTransfer.files[0])
+  router.push('/')
   store.commit('DRAG_LEAVE')
 })
