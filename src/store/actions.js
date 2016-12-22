@@ -32,7 +32,7 @@ export const addOpenSubtitle = ({ commit }, { subtitle, file, lang }) => {
   })
 }
 
-export const handleFile = ({ commit, dispatch }, file) => {
+export const handleFile = ({ commit, dispatch, getters }, file) => {
   if (file === undefined) {
     return null // TODO: Mettre un message d'erreur
   }
@@ -59,9 +59,19 @@ export const handleFile = ({ commit, dispatch }, file) => {
       })
     }
     async.parallel(calls, _ => {
+      if (!getters.hasSubtitles) {
+        dispatch('error', file.name)
+        window.setTimeout(function () {
+          commit('REMOVE_ERROR')
+        }, 2500)
+      }
       commit('END_LOADING')
     })
   })
+}
+
+export const error = ({ commit }, filename) => {
+  commit('ADD_ERROR', filename)
 }
 
 export const download = ({ commit, state }, subtitle) => {

@@ -33,7 +33,25 @@ body {
   border-bottom-right-radius: 6px;
 }
 
-/* Scrollbars
+.alert{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #FFF;
+  background-color: #ec3845;
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 4px 0px;
+  z-index: 100;
+  transform: translateY(-30px);
+  transition: transform 0.3s;
+  &.is-visible{
+    transform: translateY(0px);
+  }
+}
+
+/* Modules
    ========================================================================== */
 @import "modules/animate";
 @import "modules/fonts";

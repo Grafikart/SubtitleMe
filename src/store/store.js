@@ -10,13 +10,24 @@ import settings from './modules/settings'
 Vue.use(Vuex)
 
 const state = {
-  langs: {eng: 'English', fre: 'Français'}
+  langs: {eng: 'English', fre: 'Français'},
+  error: false
+}
+
+const mutations = {
+  ADD_ERROR (state, filename) {
+    state.error = filename
+  },
+  REMOVE_ERROR (state) {
+    state.error = false
+  }
 }
 
 export default new Vuex.Store({
   state,
   actions,
   getters,
+  mutations,
   modules: {
     dragdrop,
     loader,
